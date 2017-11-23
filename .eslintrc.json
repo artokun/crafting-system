@@ -1,0 +1,26 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": "airbnb",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
+  "rules": {
+    "space-before-function-paren": [0],
+    "arrow-parens": [0],
+    "no-nested-ternary": [0],
+    "function-paren-newline": [0],
+    "object-curly-newline": [0],
+    "no-confusing-arrow": [0],
+    "no-mixed-operators": [0],
+    "jsx-a11y/anchor-is-valid": [0]
+  }
+}

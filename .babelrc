@@ -1,0 +1,21 @@
+{
+  "plugins": [
+    "transform-runtime",
+    [
+      "module-resolver",
+      {
+        "root": ["./src"]
+      }
+    ]
+  ],
+  "presets": [
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ],
+    "react",
+    "stage-0"
+  ]
+}
