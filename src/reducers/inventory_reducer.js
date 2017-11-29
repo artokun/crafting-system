@@ -1,27 +1,36 @@
 import _ from 'lodash';
 import * as types from '../actions/types';
 
-const initialState = Array(32).fill(null);
+const initialState = {
+  slots: Array(32).fill(null),
+  selected: null,
+};
 
 const addToInventory = (state, payload) => {
-  const stateCopy = [...state];
+  const stateCopy = { ...state };
   const itemIndex = _.findIndex(
-    stateCopy,
-    el => _.isObject(el) && el.name === payload.name
+    stateCopy.slots,
+    el => _.isObject(el) && el.name === payload.name,
   );
 
   if (itemIndex >= 0) {
-    stateCopy[itemIndex].quantity += 1;
+    stateCopy.slots[itemIndex].quantity += 1;
   } else {
-    const nullIndex = _.findIndex(stateCopy, el => _.isNull(el));
-    stateCopy[nullIndex] = { ...payload, quantity: 1 };
+    const nullIndex = _.findIndex(stateCopy.slots, el => _.isNull(el));
+    stateCopy.slots[nullIndex] = { ...payload, quantity: 1 };
   }
 
   return stateCopy;
 };
 
-const sortByKey = (state, key) =>
-  _.sortBy([...state], [o => (_.isObject(o) ? o[key] : 9999)]);
+const sortByKey = (state, key) => {
+  const stateCopy = { ...state };
+  const slots = _.sortBy(stateCopy.slots, [
+    o => (_.isObject(o) ? o[key] : 9999),
+  ]);
+  stateCopy.slots = slots;
+  return stateCopy;
+};
 
 export default function(state = initialState, { type, payload }) {
   switch (type) {

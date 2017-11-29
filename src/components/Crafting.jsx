@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Crafting = ({ crafting }) => {
-
-function renderCraftingSlots() {
-    return Array(9).fill(null).map((slot, index) => {
+  function renderCraftingSlots() {
+    return crafting.slots.map((slot, index) => {
       const key = _.isNull(slot) ? index : slot.name;
 
       return _.isObject(slot) ? (
@@ -20,10 +19,8 @@ function renderCraftingSlots() {
     });
   }
 
-  return (
-    <CraftingWrapper>{renderCraftingSlots()}</CraftingWrapper>
-  )
-}
+  return <CraftingWrapper>{renderCraftingSlots()}</CraftingWrapper>;
+};
 
 const CraftingWrapper = styled.div`
   display: flex;
@@ -55,9 +52,11 @@ const CraftingSlot = styled.div`
 `;
 
 Crafting.propTypes = {
-  crafting: PropTypes.arrayOf(PropTypes.object)
-}
-
+  crafting: PropTypes.shape({
+    slots: PropTypes.array,
+    selected: PropTypes.number,
+  }).isRequired,
+};
 
 const mapStateToProps = ({ crafting }) => ({
   crafting,

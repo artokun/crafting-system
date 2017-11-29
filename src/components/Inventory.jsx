@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Inventory = ({ inventory }) => {
-
-function renderInventorySlots() {
-    return inventory.map((slot, index) => {
+  function renderInventorySlots() {
+    return inventory.slots.map((slot, index) => {
       const key = _.isNull(slot) ? index : slot.name;
 
       return _.isObject(slot) ? (
@@ -20,10 +19,8 @@ function renderInventorySlots() {
     });
   }
 
-  return (
-    <InventoryWrapper>{renderInventorySlots()}</InventoryWrapper>
-  )
-}
+  return <InventoryWrapper>{renderInventorySlots()}</InventoryWrapper>;
+};
 
 const InventoryWrapper = styled.div`
   display: flex;
@@ -54,12 +51,15 @@ const InventorySlot = styled.div`
   }
 `;
 
+Inventory.propTypes = {
+  inventory: PropTypes.shape({
+    slots: PropTypes.array,
+    selected: PropTypes.number,
+  }).isRequired,
+};
+
 const mapStateToProps = ({ inventory }) => ({
   inventory,
 });
-
-Inventory.propTypes = {
-  inventory: PropTypes.arrayOf(PropTypes.object)
-}
 
 export default connect(mapStateToProps)(Inventory);

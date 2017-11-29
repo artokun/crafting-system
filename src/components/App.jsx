@@ -34,17 +34,25 @@ const App = ({ addInventory, sortInventory }) => {
           {/* <li>Make crafting table</li> */}
           <li>clicking on a crafting table spot will highlight it</li>
           <li>will only highlight one spot at a time</li>
-          <li>clicking on an inventory item will move that item to the highlighted crafting spot</li>
+          <li>
+            clicking on an inventory item will move that item to the highlighted
+            crafting spot
+          </li>
           <li>the inventory item will be decreased by one</li>
           <li>if it's the last inventory it should disappear</li>
-          <li>clicking on the item in the crafting table will return the item back to the inventory</li>
+          <li>
+            clicking on the item in the crafting table will return the item back
+            to the inventory
+          </li>
         </ul>
       </AdminScreen>
     </MainScreen>
   );
-}
+};
 
-const MainScreen = styled.div`display: flex;`;
+const MainScreen = styled.div`
+  display: flex;
+`;
 const GameScreen = styled.div`
   display: flex;
   flex: 4;
@@ -58,11 +66,13 @@ const AdminScreen = styled.div`
   flex-direction: column;
   padding: 20px;
 `;
-const ButtonRow = styled.div`display: flex;`;
+const ButtonRow = styled.div`
+  display: flex;
+`;
 
 App.propTypes = {
   addInventory: PropTypes.func.isRequired,
   sortInventory: PropTypes.func.isRequired,
-}
+};
 
 export default connect(null, actions)(App);
