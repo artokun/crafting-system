@@ -27,6 +27,8 @@ export default function(state = initialState, { type, payload }) {
   switch (type) {
     case types.ADD_CRAFTING:
       return addToCrafting(state, payload);
+    case types.HIGHLIGHT_CRAFTING_SPOT:
+      return { ...state, selected: payload };
     default:
       return state;
   }

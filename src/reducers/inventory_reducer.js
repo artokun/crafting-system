@@ -38,6 +38,8 @@ export default function(state = initialState, { type, payload }) {
       return addToInventory(state, payload);
     case types.SORT_INVENTORY:
       return sortByKey(state, payload);
+    case types.HIGHLIGHT_INVENTORY_SPOT:
+      return { ...state, selected: payload };
     default:
       return state;
   }

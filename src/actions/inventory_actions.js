@@ -13,3 +13,8 @@ export const sortInventory = key => ({
   type: types.SORT_INVENTORY,
   payload: key,
 });
+
+export const highlightInventorySpot = index => ({
+  type: types.HIGHLIGHT_INVENTORY_SPOT,
+  payload: index,
+});

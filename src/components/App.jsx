@@ -7,14 +7,23 @@ import * as actions from '../actions';
 import Inventory from './Inventory';
 import Crafting from './Crafting';
 
-const App = ({ addInventory, sortInventory }) => {
+const App = ({
+  addInventory,
+  sortInventory,
+  highlightInventorySpot,
+  highlightCraftingSpot,
+}) => {
+  function resetSpots() {
+    highlightCraftingSpot(null);
+    highlightInventorySpot(null);
+  }
   return (
-    <MainScreen>
+    <MainScreen onClick={() => resetSpots(null)}>
       <GameScreen>
         <Inventory />
         <Crafting />
       </GameScreen>
-      <AdminScreen>
+      <AdminScreen onClick={e => e.stopPropagation()}>
         <p>Add Inventory</p>
         <ButtonRow>
           <button onClick={() => addInventory('m_stick')}>Add Stick</button>
@@ -32,8 +41,12 @@ const App = ({ addInventory, sortInventory }) => {
         </ButtonRow>
         <ul>
           {/* <li>Make crafting table</li> */}
-          <li>clicking on a crafting table spot will highlight it</li>
-          <li>will only highlight one spot at a time</li>
+          <li>
+            <s>clicking on a crafting table spot will highlight it</s>
+          </li>
+          <li>
+            <s>will only highlight one spot at a time</s>
+          </li>
           <li>
             clicking on an inventory item will move that item to the highlighted
             crafting spot
@@ -73,6 +86,8 @@ const ButtonRow = styled.div`
 App.propTypes = {
   addInventory: PropTypes.func.isRequired,
   sortInventory: PropTypes.func.isRequired,
+  highlightCraftingSpot: PropTypes.func.isRequired,
+  highlightInventorySpot: PropTypes.func.isRequired,
 };
 
 export default connect(null, actions)(App);

@@ -3,23 +3,37 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import * as actions from '../actions';
 
-const Inventory = ({ inventory }) => {
+const Inventory = ({ inventory, highlightInventorySpot }) => {
   function renderInventorySlots() {
     return inventory.slots.map((slot, index) => {
       const key = _.isNull(slot) ? index : slot.name;
 
       return _.isObject(slot) ? (
-        <InventorySlot key={key} background={require(`../${slot.sprite}`)}>
+        <InventorySlot
+          key={key}
+          onClick={() => highlightInventorySpot(index)}
+          selected={inventory.selected === index}
+          background={require(`../${slot.sprite}`)}
+        >
           <span>{slot.quantity}</span>
         </InventorySlot>
       ) : (
-        <InventorySlot key={key} />
+        <InventorySlot
+          selected={inventory.selected === index}
+          onClick={() => highlightInventorySpot(index)}
+          key={key}
+        />
       );
     });
   }
 
-  return <InventoryWrapper>{renderInventorySlots()}</InventoryWrapper>;
+  return (
+    <InventoryWrapper onClick={e => e.stopPropagation()}>
+      {renderInventorySlots()}
+    </InventoryWrapper>
+  );
 };
 
 const InventoryWrapper = styled.div`
@@ -38,7 +52,7 @@ const InventorySlot = styled.div`
   position: relative;
   flex: 1 0 12%;
   background: url(${({ background }) => background});
-  border: 1px solid lightgray;
+  border: 1px solid ${({ selected }) => (selected ? 'green' : 'lightgray')};
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-size: 80%;
@@ -53,13 +67,14 @@ const InventorySlot = styled.div`
 
 Inventory.propTypes = {
   inventory: PropTypes.shape({
-    slots: PropTypes.array,
+    slots: PropTypes.arrayOf(PropTypes.object),
     selected: PropTypes.number,
   }).isRequired,
+  highlightInventorySpot: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ inventory }) => ({
   inventory,
 });
 
-export default connect(mapStateToProps)(Inventory);
+export default connect(mapStateToProps, actions)(Inventory);
